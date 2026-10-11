@@ -1,0 +1,6 @@
+import type { HTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
+export function Container({ className, ...props }: HTMLAttributes<HTMLDivElement>) { return <div className={cn("mx-auto w-full max-w-[1200px] px-5 sm:px-7", className)} {...props} />; }
+export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) { return <div className={cn("rounded-card border border-line bg-white p-6 shadow-card", className)} {...props} />; }
+export function Badge({ className, ...props }: HTMLAttributes<HTMLSpanElement>) { return <span className={cn("inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand-strong", className)} {...props} />; }
+export function SectionHeading({ eyebrow, title, description, align = "left" }: { eyebrow?: string; title: string; description?: string; align?: "left" | "center" }) { return <div className={cn("mb-10 max-w-2xl", align === "center" && "mx-auto text-center")}>{eyebrow && <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-brand-strong">{eyebrow}</p>}<h2 className="text-3xl font-extrabold leading-tight tracking-tight text-ink sm:text-4xl">{title}</h2>{description && <p className="mt-4 text-base text-muted sm:text-lg">{description}</p>}</div>; }
