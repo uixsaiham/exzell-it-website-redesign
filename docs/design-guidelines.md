@@ -22,7 +22,7 @@ Source of truth: app/globals.css via Tailwind v4 @theme. Use semantic utilities 
 The original green is retained as an accent. Use brand-strong for small green text and white-label actions to improve contrast. Never rely on color alone for state.
 
 ## Typography
-Stack: Inter, Arial, Helvetica, sans-serif. Inter is not bundled yet; fallback fonts render without a network request. Add licensed WOFF2 files with next/font/local when available.
+Body stack: Manrope (via next/font/google, self-hosted at build time, Latin and Latin Extended subsets for German characters), then Arial, Helvetica, sans-serif. Tokens: --font-sans for body, --font-heading (Zalando Sans) for titles. Add licensed WOFF2 files with next/font/local when available.
 - Hero: 36/48/60px at base/sm/lg, weight 800, line height 1.12, tight tracking.
 - Section heading: 30/36px at base/sm, weight 800.
 - Card title: 20px, weight 700.
@@ -31,7 +31,7 @@ Stack: Inter, Arial, Helvetica, sans-serif. Inter is not bundled yet; fallback f
 One h1 per page, h2 for sections, h3 for cards. Keep long text around 65 characters per line.
 
 ## Layout
-Container: 1200px max, 20px mobile and 28px larger gutters. Use a 4px spacing rhythm: 4, 8, 12, 16, 24, 32, 40, 48, 64, 96. Cards: 24px padding and gap. Sections: 64px mobile, 96px larger.
+Container: 1240px max, 20px mobile and 28px larger gutters. Use a 4px spacing rhythm: 4, 8, 12, 16, 24, 32, 40, 48, 64, 96. Cards: 24px padding and gap. Sections: 64px mobile, 96px larger.
 Default Tailwind breakpoints: sm 640px, md 768px, lg 1024px, xl 1280px. Start with one column. Service cards use three columns from md; hero splits at lg. Check 320px and 200% zoom; avoid fixed content heights.
 Cards: 12px radius; feature panels: 20px; buttons and badges: pill. Use shadow-card for ordinary surfaces, shadow-lift sparingly. Borders provide most separation. Color transitions last 200ms; respect reduced motion.
 
@@ -71,3 +71,54 @@ The homepage extends the foundation with an editorial agency treatment:
 Implementation: components/sections/home.tsx contains the core sections and shared Eyebrow; components/sections/home-content.tsx contains differentiators, reviews and insights. Homepage CSS is grouped after the core theme in app/globals.css. The original news feed and contact submission integrations remain outside this visual iteration.
 
 Main hero title font: Zalando Sans, self-hosted through next/font/local from app/fonts/zalando-sans-variable.ttf. Use weight 800 for the main hero title at the standard width; other homepage headings retain their existing weights. The shared heading token (--font-heading / font-heading) applies this font to the hero, homepage section titles, service and process titles, benefit and review titles, article titles and contact heading. Body text and navigation retain their current font stack. Font source: https://github.com/google/fonts/tree/main/ofl/zalandosans; license retained in app/fonts/OFL.txt.
+
+Problem section (October 2026): restores the original “The problem” content as section 01, between the hero and services. Four bordered columns (2 at tablet, 1 on small phones) each name a pain point and link to the service that solves it. Later homepage eyebrows were renumbered 02–07.
+
+Homepage completion (October 2026):
+- Services list the original feature bullets (lib/site-data.ts `features`) as a two-column checklist, replacing the short tags.
+- AI news (section 08, components/sections/ai-news.tsx) is a server component. It fetches `/api/news` from the dashboard API and caches it for 30 minutes, so the homepage is regenerated at most every 30 minutes. If the feed fails or is empty, the section is left out. External links open in a new tab and say so to screen readers.
+- Contact form (components/sections/contact-form.tsx) posts to the local route app/api/contact/route.ts. That route validates the input and forwards it to the dashboard `/api/contact`. It includes the honeypot, render time and Cloudflare Turnstile token. A success message appears only when the dashboard returns `{ ok: true }`. Otherwise an inline alert offers email as a fallback.
+- The dashboard API only allows browser requests from https://exzell-it.de (CORS), which is why both integrations run on the server.
+- SelectField joins the shared form controls.
+
+Hero redesign (October 2026), after the Atlas Design reference:
+- Full-height hero in brand greens with a soft diagonal dark streak (CSS gradients, blurred). Thin vertical lines mark the container edges.
+- The header is transparent with white links over the hero on the homepage. It turns solid white after 24px of scroll or when the mobile menu is open.
+- Top left: a shorter h1 (weight 500, 30–44px; this replaces the earlier 800-weight treatment), a divider, the accent pill call-to-action with a separate arrow circle, and an avatar stack of the four real reviewers linking to #testimonials. No star ratings or review counts are shown.
+- Top right: a service showcase card (components/sections/hero-showcase.tsx). Previous and next buttons cycle through the three services, and the card links to #services.
+- Bottom: a decorative “Exzell IT” wordmark sized with container query units to fill the content width and aligned to its left edge (aria-hidden), then a row of services joined by connector lines.
+- The orbit and node visual from the previous hero was removed.
+
+Cookie consent (October 2026): components/layout/consent-banner.tsx is a branded interface for the original Cookiebot account (cbid in lib/site-data.ts). Cookiebot still decides when consent is needed and stores and logs each choice through `Cookiebot.submitCustomConsent`. Its own dialog is hidden in globals.css.
+- A floating card at bottom left (a bottom sheet on small phones), non-modal so the page stays usable. “Reject all” and “Accept all” are equally prominent. “Customize” shows the Necessary (locked), Preferences, Statistics and Marketing switches with “Save selection”.
+- The footer's “Cookie settings” button reopens it with the current choices.
+- Cookiebot only stores and logs consent on domains registered in the Cookiebot dashboard. Add the new production domain there before launch. On localhost the choice applies for the page session only.
+
+Logo (October 2026): public/assets/images/logo.svg (183×29, horizontal mark) replaces logo.png in the header and footer. Header: 28px tall on mobile and 32px from sm, vertically centred in the 85px bar. It renders solid white (CSS brightness-0 invert) while the header is transparent over the hero, and in full colour on the white header. Footer: 36px tall, full colour on the dark background.
+
+Services mega menu (October 2026): components/layout/mega-menu.tsx, with data in lib/site-data.ts (`megaMenu`). It replaces the plain “Services” header link on md and up.
+- Three columns: all six services as equal items in a two-column grid (Web Development, UI/UX Design, IT Consulting, Business Intelligence, Predictive AI, Intelligent Automation; icon tile, title and description, with an arrow that appears on hover), “IT consulting covers” (six specialist links), and a dark “Not sure where to start?” card with the booking call-to-action and a link to #services. At tablet width the dark card spans the full width as a horizontal strip.
+- The panel spans the full width under the sticky header, and the header turns solid white while it is open. It opens on mouse hover (80ms delay, 180ms close delay) or click. Escape closes it and returns focus to the trigger, as do an outside click or focus leaving the menu. The trigger exposes aria-expanded and aria-controls.
+- Mobile: a native details/summary “Services” group at the top of the mobile navigation.
+- Service links point to the pages on exzell-it.de until those pages are migrated.
+
+Service cards, sticky stacking (October 2026): the three “What we do” rows are white 28px-radius cards. They use plain CSS position: sticky, with no scroll JavaScript. Card i pins at top: 96px + i × 96px with z-index 10 + i (from a --i custom property set in home.tsx), with 40px between cards, so each card slides over the previous one and leaves its top 96px visible. Stacking only applies from 768px wide and 760px tall. On smaller screens a pinned card would hide its own lower content, so cards scroll normally there. Where the browser supports scroll-driven animations (animation-timeline: view()) and reduced motion is off, each card fades and scales in (opacity .35 → 1, translateY 48px → 0, scale .94 → 1) as it enters. Browsers without support show static cards.
+
+Six service cards (October 2026): “What we do” now lists all six services from the mega menu, in menu order: Web Development, UI/UX Design, IT & WLAN, Business Intelligence, Predictive AI, Intelligent Automation. Data is in lib/site-data.ts (typed `Service`, with a `cta` label per service). Predictive AI and Intelligent Automation copy is adapted from the original site's ML and AI automation pages. The UI/UX Design copy is new and makes no claims. The three newer services have no photography, so they use coded SVG illustrations (components/sections/service-visuals.tsx: a wireframe with a style panel, a demand forecast chart, and a chat-to-workflow automation) in the same dark green style. The hero showcase cycles through all six services (01–06), using the photo where there is one and the coded illustration otherwise. With six cards, the stacking step is 40px instead of 96px (the last card pins at 296px), and stacking needs a viewport at least 740px tall. The rise animation moves and scales only, with no fade, so a card never shows the one beneath through it.
+
+Heading weight (October 2026): every title now uses weight 700. That covers display headings, the hero h1, service, process, benefit, review, article, news, problem and contact titles, the mega menu and consent titles. The hero wordmark stays at 800. Large heading letter-spacing eased slightly to suit the heavier weight: display -.045em, contact -.055em, service titles -.04em. This supersedes the earlier weight 500 notes.
+
+Top navigation (October 2026), replacing the earlier uppercase links: data is in lib/site-data.ts (`headerNav`, `germanSiteUrl`).
+- Logo on the left. In the centre, a pill-shaped bar with Home, About us, Problems we solve (the mega menu), Resources, Career and Contact us; items are 14px medium in sentence case, 44px tall. On the right, the language menu and a “Book a call” button with a calendar icon.
+- Active item: a white pill. On the homepage, scroll position decides it: the section crossing 40% of the viewport (about, services, contact), with Contact chosen at the page end and Home near the top.
+- Over the hero, the bar is translucent white glass with white text and the active pill stays solid white. Book a call switches to lime (accent with ink text); on the white header it is brand-strong green.
+- Language: “EN” opens a small menu with English (this site, current) and Deutsch, which links to the original German site. No fake toggle.
+- Resources and Career link to the original site's pages.
+- Full bar from xl (1280px). Below that, a hamburger opens a list of the same items, with Problems we solve as a collapsible group, an EN/DE row and a full-width Book a call button.
+
+Footer (October 2026), in components/layout/site-shell.tsx: dark ink background with soft green glows.
+- Top row: brand (logo, tagline, “Your technology partner in Germany” badge); Services (all six, from megaMenu); Company (About us, Our process, Insights, Resources, Career); and a contact card (“Have a project in mind?”, email, phone, lime “Book a free discovery call”). Link arrows slide in on hover and focus.
+- A decorative “Exzell IT” wordmark (aria-hidden), faded white gradient text sized with container query units to fill the content width.
+- Bottom bar: © year Exzell IT UG (haftungsbeschränkt), the legal name from the original site; Imprint, Privacy, Cookie settings, Design system; and a Back to top button that respects reduced motion.
+- No social icons: the original links had no destinations. Add them only with real profile URLs.
+- Layout: 2 columns below 1024px, with the contact card beside the brand; on phones the brand and contact card span the full width.
