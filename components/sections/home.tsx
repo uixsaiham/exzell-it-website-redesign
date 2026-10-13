@@ -3,6 +3,7 @@ import { ArrowUpRight, Check, Code2, Network, Sparkles, MonitorX, WifiOff, LifeB
 import { Container } from "@/components/ui/primitives";
 import { ButtonLink } from "@/components/ui/button";
 import { bookingUrl, services } from "@/lib/site-data";
+import { asset } from "@/lib/utils";
 import { ContactForm } from "@/components/sections/contact-form";
 import { HeroShowcase } from "@/components/sections/hero-showcase";
 import { ServiceVisual } from "@/components/sections/service-visuals";
@@ -55,7 +56,7 @@ export function ServicesSection() {
           {services.map((service, i) => (
             <article key={service.id} className="service-row group" style={{ "--i": i } as React.CSSProperties}>
               <div className="service-content"><div className="flex items-center gap-3"><span className="service-number">0{i + 1}</span><span className="text-xs font-semibold uppercase tracking-widest text-muted">{service.verb}</span></div><h3>{service.title}</h3><p>{service.description}</p><ul className="service-features">{service.features.map(feature => <li key={feature}><Check size={15} aria-hidden="true" />{feature}</li>)}</ul><a href={bookingUrl} className="text-link">{service.cta}<span><ArrowUpRight size={18} /></span></a></div>
-              <div className={`service-image service-image-${i}`}><span className="image-corner"><service.icon size={20} /></span>{service.image ? <Image src={service.image} alt={`${service.title} by Exzell IT`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" /> : <ServiceVisual service={service} />}<span className="image-label">EXZELL IT / {service.verb.toUpperCase()}</span></div>
+              <div className={`service-image service-image-${i}`}><span className="image-corner"><service.icon size={20} /></span>{service.image ? <Image src={asset(service.image)} alt={`${service.title} by Exzell IT`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" /> : <ServiceVisual service={service} />}<span className="image-label">EXZELL IT / {service.verb.toUpperCase()}</span></div>
             </article>
           ))}
         </div>
@@ -69,7 +70,7 @@ export function AboutSection() {
     <section id="about" className="section-space">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr]"><Eyebrow>03 / A LITTLE ABOUT US</Eyebrow><div><h2 className="display-heading">Great technology.<br />Even better partnership.</h2><p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">We’re the technology partner entrepreneurs rely on at every stage. Hardware and IT support from day one, a website that builds trust, a network that never drops, and a live Business Intelligence dashboard once you’re ready to scale.</p><div className="mt-7 flex flex-wrap gap-6 text-sm font-semibold text-ink"><span className="flex items-center gap-2"><Check size={17} className="text-brand-strong" />Local support in Germany</span><span className="flex items-center gap-2"><Check size={17} className="text-brand-strong" />One team. The whole picture.</span></div></div></div>
-        <div className="about-film"><video controls playsInline preload="metadata" aria-label="Exzell IT city film"><source src="/assets/images/city-vid.mp4" type="video/mp4" />Your browser does not support video.</video><div className="film-caption"><span>ROOTED IN GERMANY. BUILT FOR WHAT’S NEXT.</span><span>Exzell IT®</span></div></div>
+        <div className="about-film"><video controls playsInline preload="metadata" aria-label="Exzell IT city film"><source src={asset("/assets/images/city-vid.mp4")} type="video/mp4" />Your browser does not support video.</video><div className="film-caption"><span>ROOTED IN GERMANY. BUILT FOR WHAT’S NEXT.</span><span>Exzell IT®</span></div></div>
       </Container>
     </section>
   );

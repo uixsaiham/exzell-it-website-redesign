@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { services } from "@/lib/site-data";
+import { asset } from "@/lib/utils";
 import { ServiceVisual } from "@/components/sections/service-visuals";
 
 export function HeroShowcase() {
@@ -14,7 +15,7 @@ export function HeroShowcase() {
     <div className="hero-showcase" role="group" aria-roledescription="carousel" aria-label="Our services">
       <a href="#services" className="hero-showcase-card group">
         <div className="hero-showcase-image">
-          {service.image ? <Image key={service.id} src={service.image} alt="" fill sizes="(max-width: 1024px) 90vw, 400px" className="object-cover transition-transform duration-700 group-hover:scale-105" priority={index === 0} /> : <ServiceVisual key={service.id} service={service} />}
+          {service.image ? <Image key={service.id} src={asset(service.image)} alt="" fill sizes="(max-width: 1024px) 90vw, 400px" className="object-cover transition-transform duration-700 group-hover:scale-105" priority={index === 0} /> : <ServiceVisual key={service.id} service={service} />}
           <span className="hero-showcase-chip"><service.icon size={13} aria-hidden="true" />0{index + 1} / {service.verb}</span>
         </div>
         <p className="hero-showcase-title" aria-live="polite">{service.title}</p>

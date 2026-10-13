@@ -8,7 +8,7 @@ import { Menu, X, ArrowUp, ArrowUpRight, CalendarDays, Mail, Phone } from "lucid
 import { Container } from "@/components/ui/primitives";
 import { Button } from "@/components/ui/button";
 import { bookingUrl, headerNav, germanSiteUrl, megaMenu } from "@/lib/site-data";
-import { cn } from "@/lib/utils";
+import { asset, cn } from "@/lib/utils";
 import { openConsentEvent } from "@/components/layout/consent-banner";
 import { MegaMenu, MobileServices } from "@/components/layout/mega-menu";
 import { LanguageMenu } from "@/components/layout/language-menu";
@@ -44,7 +44,7 @@ export function SiteHeader() {
   return (
     <header data-overlay={overlay} className={cn("site-header sticky top-0 z-40 border-b transition-colors duration-200", overlay ? "border-transparent bg-transparent" : menuOpen ? "border-line bg-white" : "border-line bg-white/95 backdrop-blur-xl")}>
       <Container className="flex min-h-[84px] items-center justify-between gap-6">
-        <Link href="/" aria-label="Exzell IT home" className="flex min-h-11 shrink-0 items-center" onClick={close}><Image src="/assets/images/logo.svg" alt="Exzell IT" width={183} height={29} className={cn("h-7 w-auto transition-[filter] duration-200 sm:h-8", overlay && "brightness-0 invert")} priority /></Link>
+        <Link href="/" aria-label="Exzell IT home" className="flex min-h-11 shrink-0 items-center" onClick={close}><Image src={asset("/assets/images/logo.svg")} alt="Exzell IT" width={183} height={29} className={cn("h-7 w-auto transition-[filter] duration-200 sm:h-8", overlay && "brightness-0 invert")} priority /></Link>
         <nav aria-label="Main navigation" className="nav-pill hidden xl:flex">
           {headerNav.map(item => {
             const isActive = pathname === "/" ? active === item.key : item.key === "home" && pathname === "/";
@@ -87,7 +87,7 @@ export function SiteFooter() {
       <Container className="relative">
         <div className="footer-top">
           <div className="footer-brand">
-            <Link href="/" aria-label="Exzell IT home" className="inline-flex min-h-11 items-center"><Image src="/assets/images/logo.svg" alt="Exzell IT" width={183} height={29} className="h-9 w-auto" /></Link>
+            <Link href="/" aria-label="Exzell IT home" className="inline-flex min-h-11 items-center"><Image src={asset("/assets/images/logo.svg")} alt="Exzell IT" width={183} height={29} className="h-9 w-auto" /></Link>
             <p>From your first laptop to a live dashboard. One partner, the whole way.</p>
             <span className="footer-badge"><span className="status-dot" />Your technology partner in Germany</span>
           </div>
