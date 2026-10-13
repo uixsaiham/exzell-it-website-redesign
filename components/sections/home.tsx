@@ -1,11 +1,13 @@
 import Image from "next/image";
-import { ArrowUpRight, Check, Code2, Network, Sparkles, MonitorX, WifiOff, LifeBuoy, TrendingDown } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, UsersRound, Check, Code2, Network, Sparkles, MonitorX, WifiOff, LifeBuoy, TrendingDown } from "lucide-react";
 import { Container } from "@/components/ui/primitives";
 import { ButtonLink } from "@/components/ui/button";
 import { bookingUrl, services } from "@/lib/site-data";
 import { asset } from "@/lib/utils";
 import { ContactForm } from "@/components/sections/contact-form";
 import { HeroShowcase } from "@/components/sections/hero-showcase";
+import { AboutFilm } from "@/components/sections/about-film";
+import { HeroBackdrop } from "@/components/sections/hero-backdrop";
 import { ServiceVisual } from "@/components/sections/service-visuals";
 
 export function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
@@ -18,7 +20,7 @@ const clientInitials = ["MS", "ST", "JS", "LA"];
 export function Hero() {
   return (
     <section className="agency-hero">
-      <div className="hero-backdrop" aria-hidden="true" /><div className="hero-grain" aria-hidden="true" />
+      <HeroBackdrop /><div className="hero-grain" aria-hidden="true" />
       <Container className="hero-frame">
         <div className="hero-top">
           <div className="hero-copy">
@@ -69,8 +71,17 @@ export function AboutSection() {
   return (
     <section id="about" className="section-space">
       <Container>
-        <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr]"><Eyebrow>03 / A LITTLE ABOUT US</Eyebrow><div><h2 className="display-heading">Great technology.<br />Even better partnership.</h2><p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">We’re the technology partner entrepreneurs rely on at every stage. Hardware and IT support from day one, a website that builds trust, a network that never drops, and a live Business Intelligence dashboard once you’re ready to scale.</p><div className="mt-7 flex flex-wrap gap-6 text-sm font-semibold text-ink"><span className="flex items-center gap-2"><Check size={17} className="text-brand-strong" />Local support in Germany</span><span className="flex items-center gap-2"><Check size={17} className="text-brand-strong" />One team. The whole picture.</span></div></div></div>
-        <div className="about-film"><video controls playsInline preload="metadata" aria-label="Exzell IT city film"><source src={asset("/assets/images/city-vid.mp4")} type="video/mp4" />Your browser does not support video.</video><div className="film-caption"><span>ROOTED IN GERMANY. BUILT FOR WHAT’S NEXT.</span><span>Exzell IT®</span></div></div>
+        <div className="about-intro">
+          <div>
+            <Eyebrow>03 / A LITTLE ABOUT US</Eyebrow><h2 className="display-heading">Great technology.<br /><span className="text-muted">Even better partnership.</span></h2>
+            <ul className="about-points"><li><span><MapPin size={18} /></span>Local support in Germany</li><li><span><UsersRound size={18} /></span>One team. The whole picture.</li></ul>
+          </div>
+          <div className="about-copy">
+            <p>We’re the technology partner entrepreneurs rely on at every stage. Hardware and IT support from day one, a website that builds trust, a network that never drops, and a live Business Intelligence dashboard once you’re ready to scale.</p>
+            <a href="#process" className="about-link">See how we work <ArrowRight size={16} /></a>
+          </div>
+        </div>
+        <AboutFilm />
       </Container>
     </section>
   );

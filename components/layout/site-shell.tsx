@@ -42,7 +42,7 @@ export function SiteHeader() {
   const overlay = pathname === "/" && !scrolled && !open && !menuOpen;
   const close = () => setOpen(false);
   return (
-    <header data-overlay={overlay} className={cn("site-header sticky top-0 z-40 border-b transition-colors duration-200", overlay ? "border-transparent bg-transparent" : menuOpen ? "border-line bg-white" : "border-line bg-white/95 backdrop-blur-xl")}>
+    <header data-overlay={overlay} className={cn("site-header sticky top-0 z-40 border-b transition-colors duration-200", overlay ? "border-transparent bg-transparent" : menuOpen ? "border-line bg-white" : "site-header-glass")}>
       <Container className="flex min-h-[84px] items-center justify-between gap-6">
         <Link href="/" aria-label="Exzell IT home" className="flex min-h-11 shrink-0 items-center" onClick={close}><Image src={asset("/assets/images/logo.svg")} alt="Exzell IT" width={183} height={29} className={cn("h-7 w-auto transition-[filter] duration-200 sm:h-8", overlay && "brightness-0 invert")} priority /></Link>
         <nav aria-label="Main navigation" className="nav-pill hidden xl:flex">
