@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, MapPin, UsersRound, Check, Code2, Network, Sparkles, MonitorX, WifiOff, LifeBuoy, TrendingDown } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, UsersRound, Laptop, Wifi, ChartNoAxesCombined, Check, Code2, MonitorX, WifiOff, LifeBuoy, TrendingDown } from "lucide-react";
 import { Container } from "@/components/ui/primitives";
 import { ButtonLink } from "@/components/ui/button";
 import { bookingUrl, services } from "@/lib/site-data";
@@ -8,6 +8,7 @@ import { ContactForm } from "@/components/sections/contact-form";
 import { HeroShowcase } from "@/components/sections/hero-showcase";
 import { AboutFilm } from "@/components/sections/about-film";
 import { HeroBackdrop } from "@/components/sections/hero-backdrop";
+import { JourneySpotlight } from "@/components/sections/journey-spotlight";
 import { ServiceVisual } from "@/components/sections/service-visuals";
 
 export function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
@@ -87,9 +88,36 @@ export function AboutSection() {
   );
 }
 
+const journey = [
+  { title: "Get set up", stage: "Day one", text: "Hardware, software and IT support. Everything you need to hit the ground running.", icon: Laptop, service: "IT & WLAN" },
+  { title: "Go live", stage: "Launch", text: "A website that reflects your business and turns first impressions into lasting trust.", icon: Code2, service: "Web Development" },
+  { title: "Stay connected", stage: "Every day", text: "Reliable networks and responsive support that keep your people productive.", icon: Wifi, service: "IT & WLAN" },
+  { title: "Scale smart", stage: "When you grow", text: "Live dashboards and AI-generated insights. Less guesswork, better decisions.", icon: ChartNoAxesCombined, service: "Business Intelligence" },
+];
+
 export function ProcessSection() {
-  const steps = [{ title: "Get set up", text: "Hardware, software and IT support. Everything you need to hit the ground running.", icon: Network }, { title: "Go live", text: "A website that reflects your business and turns first impressions into lasting trust.", icon: Code2 }, { title: "Stay connected", text: "Reliable networks and responsive support that keep your people productive.", icon: Check }, { title: "Scale smart", text: "Live dashboards and AI-generated insights. Less guesswork, better decisions.", icon: Sparkles }];
-  return <section id="process" className="process-section section-space"><Container><div className="section-intro"><div><Eyebrow light>04 / YOUR GROWTH JOURNEY</Eyebrow><h2 className="display-heading text-white">Wherever you are.<br /><span className="text-[#a4dd81]">We meet you there.</span></h2></div><p className="section-description text-white/60">You don’t need everything on day one. You need a partner who knows what comes next.</p></div><ol className="process-grid">{steps.map((step, i) => <li key={step.title}><div className="process-top"><span>0{i + 1}</span><step.icon size={23} /></div><h3>{step.title}</h3><p>{step.text}</p><span className="process-line" /></li>)}</ol><div className="process-footnote"><span className="status-dot" />One relationship. Every stage of your business.</div></Container></section>;
+  return (
+    <section id="process" className="process-section section-space">
+      <Container>
+        <div className="section-intro"><div><Eyebrow light>04 / YOUR GROWTH JOURNEY</Eyebrow><h2 className="display-heading text-white">Wherever you are.<br /><span className="text-[#a4dd81]">We meet you there.</span></h2></div><p className="section-description text-white/60">You don’t need everything on day one. You need a partner who knows what comes next.</p></div>
+        <ol className="journey">
+          {journey.map((step, i) => (
+            <li key={step.title} className="journey-step">
+              <article className="journey-card">
+                <div className="journey-card-top"><span className="journey-icon"><step.icon size={22} strokeWidth={1.7} /></span><span className="journey-num" aria-hidden="true">0{i + 1}</span></div>
+                <p className="journey-stage">Step {i + 1} · {step.stage}</p>
+                <h3>{step.title}</h3>
+                <p className="journey-text">{step.text}</p>
+                <a href="#services" className="journey-link">{step.service}<ArrowUpRight size={16} /></a>
+              </article>
+            </li>
+          ))}
+        </ol>
+        <JourneySpotlight />
+        <div className="journey-foot"><span className="status-dot" /><span>One relationship. Every stage of your business.</span><a href={bookingUrl} className="journey-cta">Book a free discovery call<ArrowUpRight size={16} /></a></div>
+      </Container>
+    </section>
+  );
 }
 
 export function ContactSection() {
