@@ -1,0 +1,6 @@
+:HL["/exzell-it-website-redesign/_next/static/chunks/2_uidht4o7if7.css","style"]
+:HL["/exzell-it-website-redesign/_next/static/media/6ab0db14f70d8ed6-s.p.13hnt-xgp82zk.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/exzell-it-website-redesign/_next/static/media/a343f882a40d2cc9-s.p.1sj6eobyi31rd.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/exzell-it-website-redesign/_next/static/media/zalando_sans_variable-s.p.2nuukksjwccjp.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
+1:[["children",{"s":"__PAGE__","h":160}]]
+0:{"b":"aPH3TkmZ6jNYmoRorMYx1","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
