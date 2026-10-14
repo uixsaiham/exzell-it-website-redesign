@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowUp, ArrowUpRight, CalendarDays, Mail, Phone } from "lucide-react";
+import { Menu, X, ArrowUp, ArrowUpRight, CalendarDays, Mail, MapPin, Phone } from "lucide-react";
 import { Container } from "@/components/ui/primitives";
 import { Button } from "@/components/ui/button";
 import { bookingUrl, headerNav, germanSiteUrl, megaMenu } from "@/lib/site-data";
@@ -83,13 +83,24 @@ export function SiteFooter() {
   const toTop = () => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   return (
     <footer className="site-footer">
-      <div className="footer-glow" aria-hidden="true" />
+      <div className="footer-glow" aria-hidden="true" /><div className="footer-grid" aria-hidden="true" />
       <Container className="relative">
+        <div className="footer-cta">
+          <div>
+            <span className="footer-badge"><span className="status-dot" />Available for new projects</span>
+            <p className="footer-cta-title">Let’s build what’s <span>next.</span></p>
+            <p className="footer-cta-text">Tell us where your business is today. We’ll help you work out what comes next — no jargon, no obligation.</p>
+          </div>
+          <div className="footer-cta-actions">
+            <a href={bookingUrl} className="footer-book"><CalendarDays size={18} aria-hidden="true" />Book a free discovery call<ArrowUpRight size={16} aria-hidden="true" /></a>
+            <a href="mailto:info@exzell-it.de" className="footer-mail"><Mail size={17} aria-hidden="true" />info@exzell-it.de</a>
+          </div>
+        </div>
         <div className="footer-top">
           <div className="footer-brand">
             <Link href="/" aria-label="Exzell IT home" className="inline-flex min-h-11 items-center"><Image src={asset("/assets/images/logo.svg")} alt="Exzell IT" width={183} height={29} className="h-9 w-auto" /></Link>
             <p>From your first laptop to a live dashboard. One partner, the whole way.</p>
-            <span className="footer-badge"><span className="status-dot" />Your technology partner in Germany</span>
+            <span className="footer-badge"><MapPin size={13} aria-hidden="true" />Your technology partner in Germany</span>
           </div>
           <nav aria-labelledby="footer-services" className="footer-col">
             <p id="footer-services" className="footer-heading">Services</p>
@@ -99,12 +110,10 @@ export function SiteFooter() {
             <p id="footer-company" className="footer-heading">Company</p>
             <ul>{footerCompany.map(item => <li key={item.label}>{item.href.startsWith("/") ? <Link href={item.href}>{item.label}<ArrowUpRight size={14} aria-hidden="true" /></Link> : <a href={item.href}>{item.label}<ArrowUpRight size={14} aria-hidden="true" /></a>}</li>)}</ul>
           </nav>
-          <div className="footer-contact">
-            <p className="footer-contact-title">Have a project in mind?</p>
-            <p className="footer-contact-text">Tell us where you are. We’ll help you work out what comes next.</p>
-            <a href="mailto:info@exzell-it.de" className="footer-contact-row"><span><Mail size={16} aria-hidden="true" /></span>info@exzell-it.de</a>
-            <a href="tel:+4951219570761" className="footer-contact-row"><span><Phone size={16} aria-hidden="true" /></span>+49 5121 9570761</a>
-            <a href={bookingUrl} className="footer-book"><CalendarDays size={17} aria-hidden="true" />Book a free discovery call</a>
+          <div className="footer-col">
+            <p className="footer-heading">Get in touch</p>
+            <a href="mailto:info@exzell-it.de" className="footer-contact-row"><span><Mail size={16} aria-hidden="true" /></span><span><small>Email us</small>info@exzell-it.de</span></a>
+            <a href="tel:+4951219570761" className="footer-contact-row"><span><Phone size={16} aria-hidden="true" /></span><span><small>Call us</small>+49 5121 9570761</span></a>
           </div>
         </div>
         <div className="footer-wordmark-wrap" aria-hidden="true"><p className="footer-wordmark">Exzell IT</p></div>

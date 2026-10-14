@@ -16,7 +16,8 @@ export function Eyebrow({ children, light = false }: { children: React.ReactNode
 }
 
 const heroServices = ["Web development", "IT consulting", "WLAN & networks", "Business intelligence"];
-const clientInitials = ["MS", "ST", "JS", "LA"];
+// Placeholder headshots (Unsplash) until real client photos are available.
+const clientAvatars = [1, 2, 3, 4].map(n => `/assets/images/avatars/client-${n}.jpg`);
 
 export function Hero() {
   return (
@@ -28,7 +29,7 @@ export function Hero() {
             <h1>From your first laptop to a live dashboard. <span>One partner, the whole way.</span></h1>
             <div className="hero-actions">
               <a href={bookingUrl} className="hero-cta group"><span className="hero-cta-icon"><ArrowUpRight size={18} /></span><span className="hero-cta-label">Book a free discovery call</span></a>
-              <a href="#testimonials" className="hero-proof"><span className="hero-avatars" aria-hidden="true">{clientInitials.map(initials => <span key={initials}>{initials}</span>)}</span><span><strong>Real client stories</strong><span>Based in Germany</span></span></a>
+              <a href="#testimonials" className="hero-proof"><span className="hero-avatars" aria-hidden="true">{clientAvatars.map(src => <Image key={src} src={asset(src)} alt="" width={36} height={36} />)}</span><span><strong>Real client stories</strong><span>Based in Germany</span></span></a>
             </div>
           </div>
           <HeroShowcase />
